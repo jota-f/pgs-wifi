@@ -1,4 +1,4 @@
-# PGSwifi — Monitoramento (Mosquitto + Telegraf + InfluxDB + Grafana)
+# PGSwifi — Monitoramento
 
 Este repositório contém uma stack Docker Compose para um servidor de monitoramento que usa:
 - Eclipse Mosquitto (MQTT broker)
