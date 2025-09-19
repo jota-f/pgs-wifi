@@ -1,0 +1,45 @@
+{
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/master/docs/sources/developers/plugins/plugin.schema.json",
+  "dependencies": {
+    "grafanaDependency": "\u003e=10.4.0",
+    "plugins": []
+  },
+  "id": "vonage-status-panel",
+  "info": {
+    "author": {
+      "name": "Grafana",
+      "url": "https://github.com/grafana/Grafana_Status_panel"
+    },
+    "build": {
+      "time": 1716478128662,
+      "repo": "https://github.com/grafana/Grafana_Status_panel",
+      "branch": "master",
+      "hash": "5d4c2430ca5ca771192e540c54e4b3ca75cb97ef",
+      "build": 10
+    },
+    "description": "Status Panel for Grafana",
+    "keywords": [
+      "status",
+      "panel"
+    ],
+    "links": [
+      {
+        "name": "Github",
+        "url": "https://github.com/grafana/Grafana_Status_panel"
+      },
+      {
+        "name": "License",
+        "url": "https://github.com/grafana/Grafana_Status_panel/blob/master/LICENSE"
+      }
+    ],
+    "logos": {
+      "large": "img/logo.svg",
+      "small": "img/logo.svg"
+    },
+    "screenshots": [],
+    "updated": "2024-05-23",
+    "version": "2.0.0"
+  },
+  "name": "Status Panel",
+  "type": "panel"
+}

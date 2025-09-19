@@ -1,0 +1,66 @@
+
+
+services:
+
+  # Serviço MQTT Broker - Mosquitto
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: mosquitto
+    restart: always
+    ports:
+      - "1883:1883"
+      #- "9001:9001" # Porta para WebSocket, opcional mas útil para clientes web
+    volumes:
+      # Mapeia o arquivo de configuração
+      - ./configs:/mosquitto/config
+      # Mapeia o diretório de persistência
+      - ./mosquitto/data:/mosquitto/data
+      # Mapeia o diretório de log
+      - ./mosquitto/log:/mosquitto/log
+
+  # Serviço Banco de Dados - InfluxDB
+  influxdb:
+    image: influxdb:2.7
+    container_name: influxdb
+    restart: always
+    ports:
+      - "8086:8086"
+    volumes:
+      - ./influxdb/data:/var/lib/influxdb2
+    environment:
+      # Sensitive values are read from environment variables defined in a local .env file
+      # Copy .env.example -> .env and fill the secrets. Do NOT commit .env to git.
+      - DOCKER_INFLUXDB_INIT_MODE=${INFLUX_INIT_MODE}
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUX_INIT_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUX_INIT_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=${INFLUX_INIT_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUX_INIT_BUCKET}
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUX_INIT_ADMIN_TOKEN}
+
+  # Serviço Coletor de Métricas - Telegraf
+  telegraf:
+    image: telegraf:1.29
+    container_name: telegraf
+    restart: always
+    volumes:
+      # Before starting the stack, render templates into `./configs`:
+      # envsubst < configs/telegraf.conf.tpl > configs/telegraf.conf
+      # envsubst < grafana/provisioning/datasources/influxdb.yml.tpl > grafana/provisioning/datasources/influxdb.yml
+      - ./configs/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    depends_on:
+      - influxdb
+      - mosquitto
+
+  # Serviço Visualizador de métricas - Grafana
+  grafana:
+    image: grafana/grafana:11.2.0
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/data:/var/lib/grafana
+      # Expose public assets so Grafana can use the provided logo
+      - ./grafana/public:/usr/share/grafana/public:ro
+    depends_on:
+      - influxdb

@@ -1,0 +1,40 @@
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+{
+  "manifestVersion": "2.0.0",
+  "signatureType": "grafana",
+  "signedByOrg": "vonage",
+  "signedByOrgName": "Vonage",
+  "plugin": "vonage-status-panel",
+  "version": "2.0.0",
+  "time": 1716478129207,
+  "keyId": "7e4d0c6a708866e7",
+  "files": {
+    "CHANGELOG.md": "8a361243b5ec7445d1db3c14d1c4e8af99fc94d65cf7525103af311eec87f388",
+    "LICENSE": "aaf3ffd2127fbe2bcb67097418f4bf59b7c6a52b8a50da33424c8ee2ed0f1c05",
+    "README.md": "a87479e64df26c43c67f1f792c0ffe603839eccbe0f17854a8a61692a6b4a504",
+    "img/environment_snapshot.png": "4146f86ca04c6ed35877d9d5415fb4ef721d46126fee1f5435636b281039f4cd",
+    "img/error.png": "261abcf4f3d00f8319eb806bb7ef72e571148c28edb3d6d47bf0a7d59273fa32",
+    "img/icon_status_panel.png": "534c904e249c36ad51e20d4d4181407745d9f877e100aa24bfed88365d35ead6",
+    "img/icon_status_panel.svg": "2e3b8c291d0ec34e483653d5a3404948332aebfef8e9b78c67bc5be9b9c2e794",
+    "img/logo.svg": "2e3b8c291d0ec34e483653d5a3404948332aebfef8e9b78c67bc5be9b9c2e794",
+    "img/ok.png": "b44277f70d1e675e0574de6400455fe41b89a8939abed7f7e72bf51509670c0f",
+    "img/warning.png": "69674523b08ef1007f1b1c28ebba43b335f908edb8af18b0bec04317953b93c2",
+    "module.js": "5ded391b4912a6b59bf8ee600b49a1591e0627c88fc4ee284f78b0cba3a444f4",
+    "module.js.map": "78ea5773af312d184019ffff34a8d234059d7d6e60fca22d7f8b9560b32cb753",
+    "plugin.json": "57f185ced113c075ef83e9b8f7fd23db7ecf9ceef6dfc74da3d39b99fad0fb92"
+  }
+}
+-----BEGIN PGP SIGNATURE-----
+Version: OpenPGP.js v4.10.11
+Comment: https://openpgpjs.org
+
+wrkEARMKAAYFAmZPYLEAIQkQfk0ManCIZucWIQTzOyW2kQdOhGNlcPN+TQxq
+cIhm5ye+AgkBf3YWuohJnqfGrJ02eugU74uYePv0vwD206oHxvPFWMfwqV9h
+v7phxhU6QzCnMQWsA95mQjeRhwIIHzn/qT/gSTICCQGl6dX/tCDE9ovoFuHt
+4I0FVMP19qafKPlxRbg4U4uqziTeW6/wFW7dHIxaSVQUlDnbGPVZ/W1qzUnX
+WJfWvzSkjA==
+=xywO
+-----END PGP SIGNATURE-----

@@ -1,0 +1,10 @@
+# Ignore environment with secrets
+.env
+
+# Ignore Docker persistent data directories if accidentally added
+influxdb/data/
+mosquitto/data/
+
+# Ignore local editor files
+.vscode/
+*.log
