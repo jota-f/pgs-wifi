@@ -8,50 +8,7 @@ Este repositório contém uma stack Docker Compose para um servidor de monitoram
 
 Objetivo: fornecer um template que possa ser reaproveitado em outros servidores.
 
-## Rápido - configurar e subir
-1. Copie o arquivo de exemplo e edite os valores sensíveis:
 
-```powershell
-copy .env.example .env
-# Edite .env no seu editor e substitua os valores change_me_* pelos tokens/senhas desejados
-```
-
-No Linux/macOS:
-
-```bash
-cp .env.example .env
-# Edite .env com seu editor favorito: nano .env | vim .env | code .env
-```
-
-2. Gere os arquivos de configuração a partir dos templates (Windows PowerShell):
-
-```powershell
-# Na raiz do projeto
-.\scripts\render-templates.ps1
-# Use -Force se quiser sobrescrever arquivos já existentes
-.\scripts\render-templates.ps1 -Force
-```
-
-No Linux/macOS (com envsubst instalado):
-
-```bash
-envsubst < configs/telegraf.conf.tpl > configs/telegraf.conf
-envsubst < grafana/provisioning/datasources/influxdb.yml.tpl > grafana/provisioning/datasources/influxdb.yml
-```
-
-3. Suba a stack:
-
-```powershell
-docker compose down;
-docker compose up -d
-```
-
-No Linux/macOS:
-
-```bash
-docker compose down
-docker compose up -d
-```
 
 ## Como usar este repositório para montar um servidor pronto
 
@@ -124,4 +81,52 @@ docker compose up -d
 8) Backup e persistência
 - Os dados persistem em `grafana/data`, `influxdb/data` e `mosquitto/data`. Faça backup desses diretórios antes de mover o servidor.
 
+
+
+
+
+## Rápido - configurar e subir
+1. Copie o arquivo de exemplo e edite os valores sensíveis:
+
+```powershell
+copy .env.example .env
+# Edite .env no seu editor e substitua os valores change_me_* pelos tokens/senhas desejados
+```
+
+No Linux/macOS:
+
+```bash
+cp .env.example .env
+# Edite .env com seu editor favorito: nano .env | vim .env | code .env
+```
+
+2. Gere os arquivos de configuração a partir dos templates (Windows PowerShell):
+
+```powershell
+# Na raiz do projeto
+.\scripts\render-templates.ps1
+# Use -Force se quiser sobrescrever arquivos já existentes
+.\scripts\render-templates.ps1 -Force
+```
+
+No Linux/macOS (com envsubst instalado):
+
+```bash
+envsubst < configs/telegraf.conf.tpl > configs/telegraf.conf
+envsubst < grafana/provisioning/datasources/influxdb.yml.tpl > grafana/provisioning/datasources/influxdb.yml
+```
+
+3. Suba a stack:
+
+```powershell
+docker compose down;
+docker compose up -d
+```
+
+No Linux/macOS:
+
+```bash
+docker compose down
+docker compose up -d
+```
 
