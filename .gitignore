@@ -1,6 +1,14 @@
 # Ignore environment with secrets
 .env
 
+# Nunca versionar arquivos sensíveis ou de credenciais!
+# Se você já comitou segredos por engano, limpe o histórico com:
+# BFG Repo-Cleaner: https://rtyley.github.io/bfg-repo-cleaner/
+#   Exemplo: bfg --delete-files .env
+# git filter-repo (alternativa): https://github.com/newren/git-filter-repo
+#   Exemplo: git filter-repo --path .env --invert-paths
+
+
 # Ignore Docker persistent data directories if accidentally added
 influxdb/data/
 mosquitto/data/

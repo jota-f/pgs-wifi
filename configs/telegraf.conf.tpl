@@ -1,6 +1,12 @@
+
 ## Template: telegraf.conf.tpl
 ## Use envsubst to render this template into configs/telegraf.conf
 ## Example: envsubst < telegraf.conf.tpl > telegraf.conf
+#
+# Dicas rápidas:
+# - Certifique-se de que o usuário/senha abaixo batem com o hash do mosquitto.passwd
+# - Se o Telegraf mostrar "not Authorized", revise permissões do arquivo e reinicie Mosquitto
+# - Veja README.md > Troubleshooting para mais detalhes
 
 [agent]
   interval = "10s"

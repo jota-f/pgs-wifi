@@ -1,3 +1,8 @@
+
+# Template: influxdb.yml.tpl
+# Use envsubst para gerar influxdb.yml
+# Certifique-se de que os tokens e orgs estão corretos no .env
+# Veja README.md > Troubleshooting para dicas de debug
 apiVersion: 1
 
 datasources:

@@ -9,6 +9,49 @@ Este repositório contém uma stack Docker Compose para um servidor de monitoram
 Objetivo: fornecer um template que possa ser reaproveitado em outros servidores.
 
 
+## Rápido - configurar e subir
+
+### Dicas para primeira instalação/execução
+
+1. **Crie os diretórios de dados (se não existirem):**
+   ```sh
+   mkdir -p grafana/data influxdb/data mosquitto/data
+   ```
+
+2. **Garanta que as portas 1883 (MQTT), 8086 (InfluxDB) e 3000 (Grafana) estejam livres.**
+   - No Linux: `sudo lsof -i :1883 -i :8086 -i :3000`
+   - No Windows: `netstat -ano | findstr ":1883"`
+
+3. **(Linux) Instale o envsubst se necessário:**
+   ```sh
+   sudo apt update && sudo apt install gettext
+   ```
+
+4. **Baixe as imagens mais recentes antes de subir:**
+   ```sh
+   docker compose pull
+   ```
+
+5. **Se esquecer algum token/senha:**
+   - Gere um novo hash com `mosquitto_passwd` e atualize o arquivo.
+   - Para InfluxDB, gere novo token via interface web/admin.
+
+6. **Se der erro, veja os logs de todos os serviços:**
+   ```sh
+   docker compose logs --tail=50 mosquitto telegraf influxdb grafana
+   ```
+
+7. **Healthcheck manual dos serviços:**
+   - Mosquitto: `docker exec -it mosquitto mosquitto_sub -h localhost -p 1883 -t '#' -u <usuario> -P <senha>`
+   - InfluxDB: acesse http://localhost:8086
+   - Grafana: acesse http://localhost:3000
+
+8. **Firewall:**
+   - Certifique-se de liberar as portas necessárias no firewall do servidor.
+
+---
+1. Copie o arquivo de exemplo e edite os valores sensíveis:
+
 
 ## Como usar este repositório para montar um servidor pronto
 
@@ -78,55 +121,86 @@ docker compose up -d
 - Este repositório já contém a pasta `grafana/` com dados, dashboards e assets. O arquivo `grafana/public/grafana_icon.svg` é disponibilizado no container e será usado como logo quando aplicável.
 - Se você preferir substituir a logo ou adicionar dashboards manualmente, coloque os arquivos em `grafana/public` ou `grafana/provisioning/dashboards/` conforme desejar.
 
+
 8) Backup e persistência
 - Os dados persistem em `grafana/data`, `influxdb/data` e `mosquitto/data`. Faça backup desses diretórios antes de mover o servidor.
 
+---
 
+## Resolução de Problemas (Troubleshooting)
 
+### Mosquitto: Permissões do arquivo de senhas
+O arquivo `configs/mosquitto.passwd` **precisa ser protegido** para que o Mosquitto aceite autenticação. Se aparecerem avisos como:
 
-
-## Rápido - configurar e subir
-1. Copie o arquivo de exemplo e edite os valores sensíveis:
-
-```powershell
-copy .env.example .env
-# Edite .env no seu editor e substitua os valores change_me_* pelos tokens/senhas desejados
+```
+Warning: File .../mosquitto.passwd has world readable permissions. Future versions will refuse to load this file.
+Warning: File .../mosquitto.passwd owner is not root. Future versions will refuse to load this file.
 ```
 
-No Linux/macOS:
+Corrija com:
 
-```bash
-cp .env.example .env
-# Edite .env com seu editor favorito: nano .env | vim .env | code .env
+```sh
+chmod 0700 configs/mosquitto.passwd
+chown root:root configs/mosquitto.passwd
 ```
 
-2. Gere os arquivos de configuração a partir dos templates (Windows PowerShell):
+Se estiver rodando via Docker Compose, pode ser necessário rodar esses comandos no host e reiniciar o container:
 
-```powershell
-# Na raiz do projeto
-.\scripts\render-templates.ps1
-# Use -Force se quiser sobrescrever arquivos já existentes
-.\scripts\render-templates.ps1 -Force
+```sh
+docker compose restart mosquitto
 ```
 
-No Linux/macOS (com envsubst instalado):
+### Gerar ou atualizar senha de usuário MQTT
+O utilitário `mosquitto_passwd` é necessário para criar ou atualizar usuários no arquivo de senhas. Se não existir no seu sistema, instale:
 
-```bash
-envsubst < configs/telegraf.conf.tpl > configs/telegraf.conf
-envsubst < grafana/provisioning/datasources/influxdb.yml.tpl > grafana/provisioning/datasources/influxdb.yml
+**Debian/Ubuntu:**
+```sh
+apt update
+apt install mosquitto
+# (o utilitário vem no pacote principal, não no mosquitto-clients)
 ```
 
-3. Suba a stack:
+Para adicionar ou atualizar o usuário `telegraf`:
+```sh
+mosquitto_passwd -b configs/mosquitto.passwd telegraf SUASENHA
+```
+Isso mantém os outros usuários intactos.
 
-```powershell
-docker compose down;
+### Telegraf: Erro "not Authorized" no MQTT
+Se o Telegraf mostrar erro:
+
+```
+Error running agent: starting input inputs.mqtt_consumer: not Authorized
+```
+
+Verifique:
+- O usuário e senha no `.env` batem com o hash do arquivo `mosquitto.passwd`
+- O arquivo de senhas está com permissões corretas (veja acima)
+- O Mosquitto foi reiniciado após atualizar o arquivo
+
+### Telegraf: Erro de DNS ou conexão
+Se aparecer:
+
+```
+network Error : dial tcp: lookup mosquitto on 127.0.0.11:53: server misbehaving
+```
+
+Isso geralmente é temporário (ordem de inicialização dos containers). O Telegraf tentará reconectar automaticamente.
+
+### Checklist rápido para debug MQTT
+- [ ] Usuário e senha do Telegraf estão corretos no `.env` e no `mosquitto.passwd`
+- [ ] Permissões do `mosquitto.passwd` corrigidas (`chmod 0700`, `chown root:root`)
+- [ ] Mosquitto reiniciado após alterar senhas
+- [ ] Telegraf reiniciado após alterar configs
+- [ ] Use `docker compose logs mosquitto` e `docker compose logs telegraf` para investigar
+
+---
+
+
+
+
+
 docker compose up -d
-```
-
-No Linux/macOS:
-
-```bash
 docker compose down
 docker compose up -d
-```
 

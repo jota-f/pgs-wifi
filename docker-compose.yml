@@ -60,7 +60,5 @@ services:
       - "3000:3000"
     volumes:
       - ./grafana/data:/var/lib/grafana
-      # Expose public assets so Grafana can use the provided logo
-      - ./grafana/public:/usr/share/grafana/public:ro
     depends_on:
       - influxdb
