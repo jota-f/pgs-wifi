@@ -8,52 +8,10 @@ Este repositório contém uma stack Docker Compose para um servidor de monitoram
 
 Objetivo: fornecer um template que possa ser reaproveitado em outros servidores.
 
+## Como usar este repositório para montar um servidor pronto
 
 ## Rápido - configurar e subir
 
-### Dicas para primeira instalação/execução
-
-1. **Crie os diretórios de dados (se não existirem):**
-   ```sh
-   mkdir -p grafana/data influxdb/data mosquitto/data
-   ```
-
-2. **Garanta que as portas 1883 (MQTT), 8086 (InfluxDB) e 3000 (Grafana) estejam livres.**
-   - No Linux: `sudo lsof -i :1883 -i :8086 -i :3000`
-   - No Windows: `netstat -ano | findstr ":1883"`
-
-3. **(Linux) Instale o envsubst se necessário:**
-   ```sh
-   sudo apt update && sudo apt install gettext
-   ```
-
-4. **Baixe as imagens mais recentes antes de subir:**
-   ```sh
-   docker compose pull
-   ```
-
-5. **Se esquecer algum token/senha:**
-   - Gere um novo hash com `mosquitto_passwd` e atualize o arquivo.
-   - Para InfluxDB, gere novo token via interface web/admin.
-
-6. **Se der erro, veja os logs de todos os serviços:**
-   ```sh
-   docker compose logs --tail=50 mosquitto telegraf influxdb grafana
-   ```
-
-7. **Healthcheck manual dos serviços:**
-   - Mosquitto: `docker exec -it mosquitto mosquitto_sub -h localhost -p 1883 -t '#' -u <usuario> -P <senha>`
-   - InfluxDB: acesse http://localhost:8086
-   - Grafana: acesse http://localhost:3000
-
-8. **Firewall:**
-   - Certifique-se de liberar as portas necessárias no firewall do servidor.
-
----
-1. Copie o arquivo de exemplo e edite os valores sensíveis:
-
-
-## Como usar este repositório para montar um servidor pronto
 
 Este guia passo-a-passo assume que você tem um servidor com Docker e Docker Compose instalados.
 
@@ -126,6 +84,48 @@ docker compose up -d
 - Os dados persistem em `grafana/data`, `influxdb/data` e `mosquitto/data`. Faça backup desses diretórios antes de mover o servidor.
 
 ---
+
+### Dicas para primeira instalação/execução
+
+1. **Crie os diretórios de dados (se não existirem):**
+   ```sh
+   mkdir -p grafana/data influxdb/data mosquitto/data
+   ```
+
+2. **Garanta que as portas 1883 (MQTT), 8086 (InfluxDB) e 3000 (Grafana) estejam livres.**
+   - No Linux: `sudo lsof -i :1883 -i :8086 -i :3000`
+   - No Windows: `netstat -ano | findstr ":1883"`
+
+3. **(Linux) Instale o envsubst se necessário:**
+   ```sh
+   sudo apt update && sudo apt install gettext
+   ```
+
+4. **Baixe as imagens mais recentes antes de subir:**
+   ```sh
+   docker compose pull
+   ```
+
+5. **Se esquecer algum token/senha:**
+   - Gere um novo hash com `mosquitto_passwd` e atualize o arquivo.
+   - Para InfluxDB, gere novo token via interface web/admin.
+
+6. **Se der erro, veja os logs de todos os serviços:**
+   ```sh
+   docker compose logs --tail=50 mosquitto telegraf influxdb grafana
+   ```
+
+7. **Healthcheck manual dos serviços:**
+   - Mosquitto: `docker exec -it mosquitto mosquitto_sub -h localhost -p 1883 -t '#' -u <usuario> -P <senha>`
+   - InfluxDB: acesse http://localhost:8086
+   - Grafana: acesse http://localhost:3000
+
+8. **Firewall:**
+   - Certifique-se de liberar as portas necessárias no firewall do servidor.
+
+---
+
+
 
 ## Resolução de Problemas (Troubleshooting)
 
