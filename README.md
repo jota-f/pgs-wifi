@@ -10,10 +10,8 @@ Objetivo: fornecer um template que possa ser reaproveitado em outros servidores.
 
 ## Como usar este repositório para montar um servidor pronto
 
-## Rápido - configurar e subir
+### Rápido - Este guia passo-a-passo assume que você tem um servidor com Docker e Docker Compose instalados.
 
-
-Este guia passo-a-passo assume que você tem um servidor com Docker e Docker Compose instalados.
 
 1) Clonar o repositório
 
@@ -55,7 +53,7 @@ cp .env.example .env
 .\scripts\render-templates.ps1
 ```
 
-No Linux/macOS com envsubst:
+No Linux/macOS gere com envsubst:
 
 ```bash
 envsubst < configs/telegraf.conf.tpl > configs/telegraf.conf
@@ -72,7 +70,7 @@ docker compose up -d
 
 6) Verificar que os serviços subiram
 - InfluxDB: acesse http://localhost:8086
-- Grafana: acesse http://localhost:3000 (usuário/senha padrão do Grafana se aplicável)
+- Grafana: acesse http://localhost:3000 
 - Mosquitto: porta 1883
 
 7) Grafana com dashboards e logo
@@ -81,7 +79,7 @@ docker compose up -d
 
 
 8) Backup e persistência
-- Os dados persistem em `grafana/data`, `influxdb/data` e `mosquitto/data`. Faça backup desses diretórios antes de mover o servidor.
+- Os dados persistem em `grafana/data`, `influxdb/data` e `mosquitto/data`.
 
 ---
 
