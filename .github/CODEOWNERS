@@ -1,0 +1,11 @@
+# CODEOWNERS for jota-f/pgs-wifi
+# All changes to this repository require review from `@jota-f`
+
+*                                         @jota-f
+.github/                                  @jota-f
+.github/workflows/                        @jota-f
+/configs/                                 @jota-f
+/grafana/                                 @jota-f
+/influxdb/                                @jota-f
+/mosquitto/                               @jota-f
+/scripts/                                 @jota-f
