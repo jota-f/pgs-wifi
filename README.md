@@ -8,6 +8,15 @@ Este repositório contém uma stack Docker Compose para um servidor de monitoram
 
 Objetivo: fornecer um template que possa ser reaproveitado em outros servidores.
 
+---
+
+### 📄 Licenciamento e Infraestrutura (TI)
+Para responder a dúvidas de homologação, segurança e infraestrutura das equipes de TI:
+*   👉 **[LICENCIAMENTO.md](file:///c:/Users/snipe/Downloads/esab/setta/servidor/pgswifi/LICENCIAMENTO.md)**: Detalhes sobre licenças Open Source (Mosquitto, Telegraf, InfluxDB, Grafana) e uso comercial sem custo.
+*   👉 **[REQUISITOS_E_INFRAESTRUTURA.md](file:///c:/Users/snipe/Downloads/esab/setta/servidor/pgswifi/REQUISITOS_E_INFRAESTRUTURA.md)**: Requisitos de hardware, portas de firewall, sincronização NTP, dimensionamento de disco e backups.
+
+---
+
 ## Como usar este repositório para montar um servidor pronto
 
 ### Rápido - Este guia passo-a-passo assume que você tem um servidor com Docker e Docker Compose instalados.
